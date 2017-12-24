@@ -29,5 +29,7 @@ namespace OJewelryTest2.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<OJewelryTest2.Models.HomeIndexViewModel> HomeIndexViewModels { get; set; }
     }
 }

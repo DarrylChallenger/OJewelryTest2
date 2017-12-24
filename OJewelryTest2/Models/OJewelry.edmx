@@ -1,0 +1,643 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OJewelryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="10" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Collections">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Companies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Components">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="ComponentTypeId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="VendorId" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Price" Type="money" />
+          <Property Name="PricePerHour" Type="money" />
+          <Property Name="PricePerPiece" Type="money" />
+          <Property Name="MetalMetal" Type="varchar" MaxLength="50" />
+          <Property Name="MetalLabor" Type="money" />
+          <Property Name="StonesCtWt" Type="int" />
+          <Property Name="StoneSize" Type="varchar" MaxLength="50" />
+          <Property Name="StonePPC" Type="money" />
+          <Property Name="FindingsMetal" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ComponentTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StyleNum" Type="varchar" MaxLength="15" />
+          <Property Name="StyleName" Type="varchar" MaxLength="50" />
+          <Property Name="Desc" Type="varchar" MaxLength="150" />
+          <Property Name="JewelryTypeId" Type="int" Nullable="false" />
+          <Property Name="CollectionId" Type="int" Nullable="false" />
+          <Property Name="IntroDate" Type="date" />
+          <Property Name="Image" Type="image" />
+          <Property Name="Width" Type="int" />
+          <Property Name="Length" Type="int" />
+          <Property Name="ChainLength" Type="int" />
+          <Property Name="RetailRatio" Type="decimal" Precision="8" Scale="5" />
+          <Property Name="RedlineRatio" Type="decimal" Precision="8" Scale="5" />
+          <Property Name="ComponentId" Type="int" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="JewelryTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Vendors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Collections_ToCompanies">
+          <End Role="Companies" Type="Self.Companies" Multiplicity="1" />
+          <End Role="Collections" Type="Self.Collections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Collections">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Companies_ToClient">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Companies" Type="Self.Companies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Companies">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Components_ToCompanies">
+          <End Role="Companies" Type="Self.Companies" Multiplicity="1" />
+          <End Role="Components" Type="Self.Components" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Components">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Components_ToComponentTypes">
+          <End Role="ComponentTypes" Type="Self.ComponentTypes" Multiplicity="1" />
+          <End Role="Components" Type="Self.Components" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ComponentTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Components">
+              <PropertyRef Name="ComponentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Components_ToVendors">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="0..1" />
+          <End Role="Components" Type="Self.Components" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Components">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_ToCollections">
+          <End Role="Collections" Type="Self.Collections" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Collections">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="CollectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_ToComponents">
+          <End Role="Components" Type="Self.Components" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Components">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_ToJewelryTypes">
+          <End Role="JewelryTypes" Type="Self.JewelryTypes" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JewelryTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="JewelryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JewelryTypes_ToCompanies">
+          <End Role="Companies" Type="Self.Companies" Multiplicity="1" />
+          <End Role="JewelryTypes" Type="Self.JewelryTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JewelryTypes">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OJewelryModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Collections" EntityType="Self.Collections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Components" EntityType="Self.Components" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComponentTypes" EntityType="Self.ComponentTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JewelryTypes" EntityType="Self.JewelryTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendors" EntityType="Self.Vendors" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Collections_ToCompanies" Association="Self.FK_Collections_ToCompanies">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="Collections" EntitySet="Collections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Companies_ToClient" Association="Self.FK_Companies_ToClient">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Companies" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Components_ToCompanies" Association="Self.FK_Components_ToCompanies">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="Components" EntitySet="Components" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Components_ToComponentTypes" Association="Self.FK_Components_ToComponentTypes">
+            <End Role="ComponentTypes" EntitySet="ComponentTypes" />
+            <End Role="Components" EntitySet="Components" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Components_ToVendors" Association="Self.FK_Components_ToVendors">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="Components" EntitySet="Components" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_ToCollections" Association="Self.FK_Item_ToCollections">
+            <End Role="Collections" EntitySet="Collections" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_ToComponents" Association="Self.FK_Item_ToComponents">
+            <End Role="Components" EntitySet="Components" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_ToJewelryTypes" Association="Self.FK_Item_ToJewelryTypes">
+            <End Role="JewelryTypes" EntitySet="JewelryTypes" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JewelryTypes_ToCompanies" Association="Self.FK_JewelryTypes_ToCompanies">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="JewelryTypes" EntitySet="JewelryTypes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OJewelryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Companies" Relationship="Self.FK_Companies_ToClient" FromRole="Client" ToRole="Companies" />
+        </EntityType>
+        <EntityType Name="Collection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK_Collections_ToCompanies" FromRole="Collections" ToRole="Companies" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_Item_ToCollections" FromRole="Collections" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Companies_ToClient" FromRole="Companies" ToRole="Client" />
+          <NavigationProperty Name="Collections" Relationship="Self.FK_Collections_ToCompanies" FromRole="Companies" ToRole="Collections" />
+          <NavigationProperty Name="Components" Relationship="Self.FK_Components_ToCompanies" FromRole="Companies" ToRole="Components" />
+          <NavigationProperty Name="JewelryTypes" Relationship="Self.FK_JewelryTypes_ToCompanies" FromRole="Companies" ToRole="JewelryTypes" />
+        </EntityType>
+        <EntityType Name="Component">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="ComponentTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VendorId" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PricePerHour" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PricePerPiece" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MetalMetal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MetalLabor" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="StonesCtWt" Type="Int32" />
+          <Property Name="StoneSize" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StonePPC" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FindingsMetal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK_Components_ToCompanies" FromRole="Components" ToRole="Companies" />
+          <NavigationProperty Name="ComponentType" Relationship="Self.FK_Components_ToComponentTypes" FromRole="Components" ToRole="ComponentTypes" />
+          <NavigationProperty Name="Vendor" Relationship="Self.FK_Components_ToVendors" FromRole="Components" ToRole="Vendors" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_Item_ToComponents" FromRole="Components" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="ComponentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Components" Relationship="Self.FK_Components_ToComponentTypes" FromRole="ComponentTypes" ToRole="Components" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StyleNum" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="StyleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Desc" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="JewelryTypeId" Type="Int32" Nullable="false" />
+          <Property Name="CollectionId" Type="Int32" Nullable="false" />
+          <Property Name="IntroDate" Type="DateTime" Precision="0" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Width" Type="Int32" />
+          <Property Name="Length" Type="Int32" />
+          <Property Name="ChainLength" Type="Int32" />
+          <Property Name="RetailRatio" Type="Decimal" Precision="8" Scale="5" />
+          <Property Name="RedlineRatio" Type="Decimal" Precision="8" Scale="5" />
+          <Property Name="ComponentId" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="Collection" Relationship="Self.FK_Item_ToCollections" FromRole="Item" ToRole="Collections" />
+          <NavigationProperty Name="Component" Relationship="Self.FK_Item_ToComponents" FromRole="Item" ToRole="Components" />
+          <NavigationProperty Name="JewelryType" Relationship="Self.FK_Item_ToJewelryTypes" FromRole="Item" ToRole="JewelryTypes" />
+        </EntityType>
+        <EntityType Name="JewelryType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK_JewelryTypes_ToCompanies" FromRole="JewelryTypes" ToRole="Companies" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_Item_ToJewelryTypes" FromRole="JewelryTypes" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="Vendor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Components" Relationship="Self.FK_Components_ToVendors" FromRole="Vendors" ToRole="Components" />
+        </EntityType>
+        <Association Name="FK_Companies_ToClient">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Companies" Type="Self.Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Companies">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Collections_ToCompanies">
+          <End Role="Companies" Type="Self.Company" Multiplicity="1" />
+          <End Role="Collections" Type="Self.Collection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Collections">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_ToCollections">
+          <End Role="Collections" Type="Self.Collection" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Collections">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="CollectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Components_ToCompanies">
+          <End Role="Companies" Type="Self.Company" Multiplicity="1" />
+          <End Role="Components" Type="Self.Component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Components">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JewelryTypes_ToCompanies">
+          <End Role="Companies" Type="Self.Company" Multiplicity="1" />
+          <End Role="JewelryTypes" Type="Self.JewelryType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JewelryTypes">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Components_ToComponentTypes">
+          <End Role="ComponentTypes" Type="Self.ComponentType" Multiplicity="1" />
+          <End Role="Components" Type="Self.Component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ComponentTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Components">
+              <PropertyRef Name="ComponentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Components_ToVendors">
+          <End Role="Vendors" Type="Self.Vendor" Multiplicity="0..1" />
+          <End Role="Components" Type="Self.Component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Components">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_ToComponents">
+          <End Role="Components" Type="Self.Component" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Components">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_ToJewelryTypes">
+          <End Role="JewelryTypes" Type="Self.JewelryType" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JewelryTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="JewelryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OJewelryEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Collections" EntityType="Self.Collection" />
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="Components" EntityType="Self.Component" />
+          <EntitySet Name="ComponentTypes" EntityType="Self.ComponentType" />
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="JewelryTypes" EntityType="Self.JewelryType" />
+          <EntitySet Name="Vendors" EntityType="Self.Vendor" />
+          <AssociationSet Name="FK_Companies_ToClient" Association="Self.FK_Companies_ToClient">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Companies" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Collections_ToCompanies" Association="Self.FK_Collections_ToCompanies">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="Collections" EntitySet="Collections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_ToCollections" Association="Self.FK_Item_ToCollections">
+            <End Role="Collections" EntitySet="Collections" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Components_ToCompanies" Association="Self.FK_Components_ToCompanies">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="Components" EntitySet="Components" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JewelryTypes_ToCompanies" Association="Self.FK_JewelryTypes_ToCompanies">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="JewelryTypes" EntitySet="JewelryTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Components_ToComponentTypes" Association="Self.FK_Components_ToComponentTypes">
+            <End Role="ComponentTypes" EntitySet="ComponentTypes" />
+            <End Role="Components" EntitySet="Components" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Components_ToVendors" Association="Self.FK_Components_ToVendors">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="Components" EntitySet="Components" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_ToComponents" Association="Self.FK_Item_ToComponents">
+            <End Role="Components" EntitySet="Components" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_ToJewelryTypes" Association="Self.FK_Item_ToJewelryTypes">
+            <End Role="JewelryTypes" EntitySet="JewelryTypes" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OJewelryModelStoreContainer" CdmEntityContainer="OJewelryEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="OJewelryModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Collections">
+            <EntityTypeMapping TypeName="OJewelryModel.Collection">
+              <MappingFragment StoreEntitySet="Collections">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="OJewelryModel.Company">
+              <MappingFragment StoreEntitySet="Companies">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Components">
+            <EntityTypeMapping TypeName="OJewelryModel.Component">
+              <MappingFragment StoreEntitySet="Components">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="ComponentTypeId" ColumnName="ComponentTypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PricePerHour" ColumnName="PricePerHour" />
+                <ScalarProperty Name="PricePerPiece" ColumnName="PricePerPiece" />
+                <ScalarProperty Name="MetalMetal" ColumnName="MetalMetal" />
+                <ScalarProperty Name="MetalLabor" ColumnName="MetalLabor" />
+                <ScalarProperty Name="StonesCtWt" ColumnName="StonesCtWt" />
+                <ScalarProperty Name="StoneSize" ColumnName="StoneSize" />
+                <ScalarProperty Name="StonePPC" ColumnName="StonePPC" />
+                <ScalarProperty Name="FindingsMetal" ColumnName="FindingsMetal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComponentTypes">
+            <EntityTypeMapping TypeName="OJewelryModel.ComponentType">
+              <MappingFragment StoreEntitySet="ComponentTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="OJewelryModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StyleNum" ColumnName="StyleNum" />
+                <ScalarProperty Name="StyleName" ColumnName="StyleName" />
+                <ScalarProperty Name="Desc" ColumnName="Desc" />
+                <ScalarProperty Name="JewelryTypeId" ColumnName="JewelryTypeId" />
+                <ScalarProperty Name="CollectionId" ColumnName="CollectionId" />
+                <ScalarProperty Name="IntroDate" ColumnName="IntroDate" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="ChainLength" ColumnName="ChainLength" />
+                <ScalarProperty Name="RetailRatio" ColumnName="RetailRatio" />
+                <ScalarProperty Name="RedlineRatio" ColumnName="RedlineRatio" />
+                <ScalarProperty Name="ComponentId" ColumnName="ComponentId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JewelryTypes">
+            <EntityTypeMapping TypeName="OJewelryModel.JewelryType">
+              <MappingFragment StoreEntitySet="JewelryTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vendors">
+            <EntityTypeMapping TypeName="OJewelryModel.Vendor">
+              <MappingFragment StoreEntitySet="Vendors">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

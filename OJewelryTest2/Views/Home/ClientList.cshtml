@@ -1,0 +1,51 @@
+﻿@model IEnumerable<OJewelryTest2.Models.HomeIndexViewModel>
+
+@{
+    ViewBag.Title = "ClientList";
+}
+
+<h2>ClientList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "ClientCreate")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ClientName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClientPhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClientEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClientName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClientPhone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClientEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "ClientEdit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "ClientDetail", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "ClientDelete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -53,6 +53,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -206,8 +208,48 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Client.cs">
+      <DependentUpon>OJewelry.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Collection.cs">
+      <DependentUpon>OJewelry.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Company.cs">
+      <DependentUpon>OJewelry.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Component.cs">
+      <DependentUpon>OJewelry.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ComponentType.cs">
+      <DependentUpon>OJewelry.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\HomeIndexViewModel.cs" />
+    <Compile Include="Models\Item.cs">
+      <DependentUpon>OJewelry.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JewelryType.cs">
+      <DependentUpon>OJewelry.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OJewelry.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OJewelry.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OJewelry.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OJewelry.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OJewelry.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OJewelry.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Vendor.cs">
+      <DependentUpon>OJewelry.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -218,10 +260,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\OJewelry.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OJewelry.edmx</DependentUpon>
+      <LastGenOutput>OJewelry.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\OJewelry.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OJewelry.edmx</DependentUpon>
+      <LastGenOutput>OJewelry.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="Models\OJewelry.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OJewelry.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\OJewelry.edmx.diagram">
+      <DependentUpon>OJewelry.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -234,7 +293,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -268,6 +329,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\ClientDetail.cshtml" />
+    <Content Include="Views\Home\ClientList.cshtml" />
+    <Content Include="Views\Home\ClientEdit.cshtml" />
+    <Content Include="Views\Home\ClientCreate.cshtml" />
+    <Content Include="Views\Home\ClientDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -284,6 +350,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
